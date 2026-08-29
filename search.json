@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "notes/olivetti-pca.html",
+    "href": "notes/olivetti-pca.html",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "",
+    "text": "This note documents the migration from the original Julia PCA workflow to Python for the Olivetti faces dataset.\nThe original project used a train/test split, a PCA projection, and a reconstruction step. The Python implementation keeps the same structure while working with numpy and scikit-learn."
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#overview",
+    "href": "notes/olivetti-pca.html#overview",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "",
+    "text": "This note documents the migration from the original Julia PCA workflow to Python for the Olivetti faces dataset.\nThe original project used a train/test split, a PCA projection, and a reconstruction step. The Python implementation keeps the same structure while working with numpy and scikit-learn."
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#data-loading",
+    "href": "notes/olivetti-pca.html#data-loading",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Data loading",
+    "text": "Data loading\nfrom olivetti_faces.data import load_olivetti_faces\n\n(X_train, X_test), (y_train, y_test) = load_olivetti_faces(test_size=0.2, random_state=123)"
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#pca-fitting",
+    "href": "notes/olivetti-pca.html#pca-fitting",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "PCA fitting",
+    "text": "PCA fitting\nfrom olivetti_faces.model import make_model\n\nmodel = make_model(X_train, n_components=10)"
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#projection-and-reconstruction",
+    "href": "notes/olivetti-pca.html#projection-and-reconstruction",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Projection and reconstruction",
+    "text": "Projection and reconstruction\nfrom olivetti_faces.model import transform_to_pcadata, reconstruct_data\n\nprojected = transform_to_pcadata(model, X_train[:5])\nreconstructed = reconstruct_data(model, projected)"
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#expected-behavior",
+    "href": "notes/olivetti-pca.html#expected-behavior",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Expected behavior",
+    "text": "Expected behavior\n\nThe training matrix has shape (320, 4096) for the 80/20 split.\nPCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.\nReconstructed faces should approximate the originals with small reconstruction error."
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#notes",
+    "href": "notes/olivetti-pca.html#notes",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Notes",
+    "text": "Notes\nThis migration intentionally excludes the generated model artifacts and the removed legacy Stat2 folder from the repository branch."
+  }
+]

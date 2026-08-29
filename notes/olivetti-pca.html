@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>readme – Olivetti Faces PCA Migration</title>
+<title>Olivetti Faces PCA Migration</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -64,23 +64,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-445b8638c3d06994fee0907d791121c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e3adbaa939bcd423dddc8c8a834270b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Olivetti Faces PCA Migration</span>
     </a>
   </div>
@@ -130,7 +130,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./notes/olivetti-pca.html"> 
+    <a class="nav-link active" href="../notes/olivetti-pca.html" aria-current="page"> 
 <span class="menu-text">Project note</span></a>
   </li>  
 </ul>
@@ -149,105 +149,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#olivetti-faces-project" id="toc-olivetti-faces-project" class="nav-link active" data-scroll-target="#olivetti-faces-project">Olivetti Faces Project</a>
-  <ul class="collapse">
-  <li><a href="#scope" id="toc-scope" class="nav-link" data-scroll-target="#scope">Scope</a></li>
-  <li><a href="#original-julia-workflow-reference" id="toc-original-julia-workflow-reference" class="nav-link" data-scroll-target="#original-julia-workflow-reference">Original Julia workflow reference</a>
-  <ul class="collapse">
-  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing">1. Data processing</a></li>
-  <li><a href="#train-and-save-model" id="toc-train-and-save-model" class="nav-link" data-scroll-target="#train-and-save-model">2. Train and save model</a></li>
-  <li><a href="#transform-and-reconstruct" id="toc-transform-and-reconstruct" class="nav-link" data-scroll-target="#transform-and-reconstruct">3. Transform and reconstruct</a></li>
-  </ul></li>
-  <li><a href="#python-migration" id="toc-python-migration" class="nav-link" data-scroll-target="#python-migration">Python migration</a>
-  <ul class="collapse">
-  <li><a href="#python-entry-points" id="toc-python-entry-points" class="nav-link" data-scroll-target="#python-entry-points">Python entry points</a></li>
-  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation">Validation</a></li>
-  </ul></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
+  <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data loading</a></li>
+  <li><a href="#pca-fitting" id="toc-pca-fitting" class="nav-link" data-scroll-target="#pca-fitting">PCA fitting</a></li>
+  <li><a href="#projection-and-reconstruction" id="toc-projection-and-reconstruction" class="nav-link" data-scroll-target="#projection-and-reconstruction">Projection and reconstruction</a></li>
+  <li><a href="#expected-behavior" id="toc-expected-behavior" class="nav-link" data-scroll-target="#expected-behavior">Expected behavior</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Olivetti Faces PCA Migration</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="olivetti-faces-project" class="level1">
-<h1>Olivetti Faces Project</h1>
-<p>This project originally implemented a Julia-based PCA workflow for the Olivetti faces dataset. The current migration keeps the original reconstruction logic while porting the working pipeline to Python for easier experimentation and testing.</p>
-<section id="scope" class="level2">
-<h2 class="anchored" data-anchor-id="scope">Scope</h2>
-<p>The Python migration intentionally does not include the legacy model artifacts in the <code>models/</code> directory or the removed <code>Stat2-julia/</code> folder. These are excluded from the repository submission and are not part of the active Python branch.</p>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>This note documents the migration from the original Julia PCA workflow to Python for the Olivetti faces dataset.</p>
+<p>The original project used a train/test split, a PCA projection, and a reconstruction step. The Python implementation keeps the same structure while working with <code>numpy</code> and <code>scikit-learn</code>.</p>
 </section>
-<section id="original-julia-workflow-reference" class="level2">
-<h2 class="anchored" data-anchor-id="original-julia-workflow-reference">Original Julia workflow reference</h2>
-<section id="data-processing" class="level3">
-<h3 class="anchored" data-anchor-id="data-processing">1. Data processing</h3>
-<p>The Julia version read the dataset CSV and returned training and test splits with labels.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(Xtrain, Xtest), (ytrain, ytest) <span class="op">=</span> <span class="fu">load_olivetti_faces</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="data-loading" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading">Data loading</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.data <span class="im">import</span> load_olivetti_faces</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(X_train, X_test), (y_train, y_test) <span class="op">=</span> load_olivetti_faces(test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="train-and-save-model" class="level3">
-<h3 class="anchored" data-anchor-id="train-and-save-model">2. Train and save model</h3>
-<p>The original workflow built a PCA model for a selected dimension and saved it to a <code>.jlso</code> artifact.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">make_model</span>(Xtr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (dim) <span class="op">-&gt;</span> <span class="cf">begin</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> <span class="fu">PCA</span>(maxoutdim<span class="op">=</span>dim)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        mach <span class="op">=</span> <span class="fu">machine</span>(model, Xtr) <span class="op">|&gt;</span> fit!</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            JLSO.<span class="fu">save</span>(<span class="st">"</span><span class="sc">$</span>(<span class="fu">pwd</span>())<span class="st">/models/of-model-</span><span class="sc">$</span>(dim)<span class="st">pcs.jlso"</span>, <span class="op">:</span>pca <span class="op">=&gt;</span> mach)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@info</span> <span class="st">"</span><span class="sc">$</span>(dim)<span class="st"> dimension pca model saved"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">catch</span> <span class="cn">e</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>            <span class="pp">@warn</span> <span class="st">"</span><span class="sc">$</span>(<span class="cn">e</span>)<span class="st"> has problem"</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="pca-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="pca-fitting">PCA fitting</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> make_model</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> make_model(X_train, n_components<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="transform-and-reconstruct" class="level3">
-<h3 class="anchored" data-anchor-id="transform-and-reconstruct">3. Transform and reconstruct</h3>
-<p>The Julia flow used <code>transform</code> for projection and <code>inverse_transform</code> for reconstruction.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pcaX <span class="op">=</span> <span class="fu">transform</span>(mach, imgs)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Xr <span class="op">=</span> <span class="fu">inverse_transform</span>(mach, pcaX)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="projection-and-reconstruction" class="level2">
+<h2 class="anchored" data-anchor-id="projection-and-reconstruction">Projection and reconstruction</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> transform_to_pcadata, reconstruct_data</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>projected <span class="op">=</span> transform_to_pcadata(model, X_train[:<span class="dv">5</span>])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>reconstructed <span class="op">=</span> reconstruct_data(model, projected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-</section>
-<section id="python-migration" class="level2">
-<h2 class="anchored" data-anchor-id="python-migration">Python migration</h2>
-<p>The active Python implementation mirrors the same workflow:</p>
+<section id="expected-behavior" class="level2">
+<h2 class="anchored" data-anchor-id="expected-behavior">Expected behavior</h2>
 <ul>
-<li>load the Olivetti CSV data</li>
-<li>split into train/test folds</li>
-<li>fit a PCA model on training samples</li>
-<li>project samples to the reduced space</li>
-<li>reconstruct data back to the original feature space</li>
+<li>The training matrix has shape <code>(320, 4096)</code> for the 80/20 split.</li>
+<li>PCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.</li>
+<li>Reconstructed faces should approximate the originals with small reconstruction error.</li>
 </ul>
-<section id="python-entry-points" class="level3">
-<h3 class="anchored" data-anchor-id="python-entry-points">Python entry points</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.data <span class="im">import</span> load_olivetti_faces</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> make_model, transform_to_pcadata, reconstruct_data</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>(X_train, X_test), (y_train, y_test) <span class="op">=</span> load_olivetti_faces(test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> make_model(X_train, n_components<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>projected <span class="op">=</span> transform_to_pcadata(model, X_train[:<span class="dv">5</span>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>reconstructed <span class="op">=</span> reconstruct_data(model, projected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="validation" class="level3">
-<h3 class="anchored" data-anchor-id="validation">Validation</h3>
-<p>The Python migration has a regression test covering the dataset split and PCA round-trip reconstruction.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pytest <span class="at">-q</span> tests/test_pipeline.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
 </section>
 <section id="notes" class="level2">
 <h2 class="anchored" data-anchor-id="notes">Notes</h2>
-<ul>
-<li>Use Python 3.10+</li>
-<li>Prefer <code>numpy</code>, <code>scipy</code>, <code>scikit-learn</code>, and <code>matplotlib</code></li>
-<li>Keep the project focused on the Olivetti faces PCA workflow</li>
-<li>Do not include generated model files or the legacy <code>Stat2-julia</code> material in final submission</li>
-</ul>
+<p>This migration intentionally excludes the generated model artifacts and the removed legacy Stat2 folder from the repository branch.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -324,7 +293,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/math4mad\.github\.io\/olivetti-faces-project\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
