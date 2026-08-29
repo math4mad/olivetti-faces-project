@@ -61,5 +61,12 @@
     "title": "Olivetti Faces PCA Migration",
     "section": "Notes",
     "text": "Notes\nThis migration intentionally excludes the generated model artifacts and the removed legacy Stat2 folder from the repository branch."
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#end",
+    "href": "notes/olivetti-pca.html#end",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "end",
+    "text": "end"
   }
 ]
