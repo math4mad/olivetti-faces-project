@@ -92,3 +92,5 @@ The expected pattern is that reconstruction error decreases as the model dimensi
 ## Notes
 
 This migration intentionally excludes the generated model artifacts and the removed legacy Stat2 folder from the repository branch.
+
+## end 
