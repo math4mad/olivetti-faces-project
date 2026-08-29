@@ -1,101 +1,84 @@
-# olivetti  face recognition 的项目
+# Olivetti Faces Project
 
-## 1. dataprocessing.jl 
-  
-读取 csv 文件, 返回 返回 olivetti face  训练数据,测试数据和标签
-`load_olivetti_faces` 函数返回训练,测试数据集和对应标签
+This project originally implemented a Julia-based PCA workflow for the Olivetti faces dataset. The current migration keeps the original reconstruction logic while porting the working pipeline to Python for easier experimentation and testing.
+
+## Scope
+
+The Python migration intentionally does not include the legacy model artifacts in the `models/` directory or the removed `Stat2-julia/` folder. These are excluded from the repository submission and are not part of the active Python branch.
+
+## Original Julia workflow reference
+
+### 1. Data processing
+
+The Julia version read the dataset CSV and returned training and test splits with labels.
+
 ```julia
-(Xtrain, Xtest), (ytrain, ytest)=load_olivetti_faces()
+(Xtrain, Xtest), (ytrain, ytest) = load_olivetti_faces()
 ```
 
-## 2. train&save-model.jl
+### 2. Train and save model
 
-导入数据,返回一个高阶函数`make_model`
-`make_model` 函数首先接受训练数据集, 然后等待 `dim` 需要缩减到的维度参数
-最终训练的模型保存的对应的 jlso 文件中:`JLSO.save("$(pwd())/models/of-model-$(dim)pcs.jlso",:pca=>mach)`
-
+The original workflow built a PCA model for a selected dimension and saved it to a `.jlso` artifact.
 
 ```julia
-function  make_model(Xtr)
-    return (dim)->begin
+function make_model(Xtr)
+    return (dim) -> begin
         model = PCA(maxoutdim=dim)
         mach = machine(model, Xtr) |> fit!
         try
-            JLSO.save("$(pwd())/models/of-model-$(dim)pcs.jlso",:pca=>mach)
+            JLSO.save("$(pwd())/models/of-model-$(dim)pcs.jlso", :pca => mach)
             @info "$(dim) dimension pca model saved"
         catch e
             @warn "$(e) has problem"
         end
     end
 end
-
-make_ol_model=make_model(Xtrain)
-#make_ol_model.([10,20,150])
 ```
 
+### 3. Transform and reconstruct
 
-## 3-transform-reconstruct-methods
-在 `MLJ.jl`的 pca 方法和 `MultiVariate.jl` 的方法稍有不同, 使用的是 `transform`函数,而不是`project`方法 
-
-主要函数为`transform_to_pcadata1`,为高阶函数
-输入参数`dim` 为需要缩减到的维度
-函数内部调用第2 步获得的模型
-返回一个函数 等待 df 参数
-内部调用`transform`函数对数据做降维处理
-返回数据
+The Julia flow used `transform` for projection and `inverse_transform` for reconstruction.
 
 ```julia
-function transform_to_pcadata(dim::Int)
-    mach = JLSO.load("$(pwd())/models/of-model-$(dim)pcs.jlso")[:pca]
-    return (imgs::DataFrame)->begin
-        @info "$dim pca proceeding..."
-        pcaX = transform(mach, imgs)     # 降维数据
-        # 返回降维数据
-        return pcaX
-    end
-end
+pcaX = transform(mach, imgs)
+Xr = inverse_transform(mach, pcaX)
 ```
 
+## Python migration
 
-`transform_to_pcadata2` 与`transform_to_pcadata1`  一样是高阶函数
-但是参数输入的顺序不同, `transform_to_pcadata2`中先输入dataframe, 然后等待维度参数
-```julia
-    function transform_to_pcadata2(imgs::DataFrame)
-        
-        return (dim::Int)->begin
-            @info "$dim pca proceeding..."
-            mach = JLSO.load("$(pwd())/models/of-model-$(dim)pcs.jlso")[:pca]
-            pcaX = transform(mach, imgs)     # 降维数据
-            # 返回降维数据
-            return pcaX
-        end
-    end
+The active Python implementation mirrors the same workflow:
+
+- load the Olivetti CSV data
+- split into train/test folds
+- fit a PCA model on training samples
+- project samples to the reduced space
+- reconstruct data back to the original feature space
+
+### Python entry points
+
+```python
+from olivetti_faces.data import load_olivetti_faces
+from olivetti_faces.model import make_model, transform_to_pcadata, reconstruct_data
+
+(X_train, X_test), (y_train, y_test) = load_olivetti_faces(test_size=0.2, random_state=123)
+model = make_model(X_train, n_components=10)
+projected = transform_to_pcadata(model, X_train[:5])
+reconstructed = reconstruct_data(model, projected)
 ```
 
-### 重建数据方法
-从低维度数据恢复原始维度数据, 在`MLJ`中使用的方法是`inverse_transform`
-`reconstruct_data` 方法首先从数据 dataframe 中获取维度`column`数据
-从存储模型中调用训练模型
-执行重建变换
+### Validation
 
-```julia
-    """
-        reconstruct_data(imgs::DataFrame)
-    从降维数据重建图片
-    TBW
-    """
-    function reconstruct_data(imgs::DataFrame)
-            
-            _,cols=size(imgs)
-            @info "imgs  reconstructing from $(cols) dimension" 
-            mach = JLSO.load("$(pwd())/models/of-model-$(cols)pcs.jlso")[:pca]
-            Xr = inverse_transform(mach, imgs)  # 重建近似数据
-            return Xr
-    end
+The Python migration has a regression test covering the dataset split and PCA round-trip reconstruction.
+
+```bash
+python -m pytest -q tests/test_pipeline.py
 ```
 
-## 维度缩减到 1d 的数据
+## Notes
 
-以 faces 为例,如果缩减到一个维度, 获得的数据是所有图片共用的最大元素,也就是所有人面部共用的特征
+- Use Python 3.10+
+- Prefer `numpy`, `scipy`, `scikit-learn`, and `matplotlib`
+- Keep the project focused on the Olivetti faces PCA workflow
+- Do not include generated model files or the legacy `Stat2-julia` material in final submission
 
 

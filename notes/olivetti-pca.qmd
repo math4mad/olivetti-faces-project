@@ -1,0 +1,45 @@
+---
+title: "Olivetti Faces PCA Migration"
+format: html
+---
+
+## Overview
+
+This note documents the migration from the original Julia PCA workflow to Python for the Olivetti faces dataset.
+
+The original project used a train/test split, a PCA projection, and a reconstruction step. The Python implementation keeps the same structure while working with `numpy` and `scikit-learn`.
+
+## Data loading
+
+```python
+from olivetti_faces.data import load_olivetti_faces
+
+(X_train, X_test), (y_train, y_test) = load_olivetti_faces(test_size=0.2, random_state=123)
+```
+
+## PCA fitting
+
+```python
+from olivetti_faces.model import make_model
+
+model = make_model(X_train, n_components=10)
+```
+
+## Projection and reconstruction
+
+```python
+from olivetti_faces.model import transform_to_pcadata, reconstruct_data
+
+projected = transform_to_pcadata(model, X_train[:5])
+reconstructed = reconstruct_data(model, projected)
+```
+
+## Expected behavior
+
+- The training matrix has shape `(320, 4096)` for the 80/20 split.
+- PCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.
+- Reconstructed faces should approximate the originals with small reconstruction error.
+
+## Notes
+
+This migration intentionally excludes the generated model artifacts and the removed legacy Stat2 folder from the repository branch.

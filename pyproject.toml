@@ -1,0 +1,15 @@
+[project]
+name = "olivetti-faces"
+version = "0.1.0"
+description = "Python migration of the Olivetti faces PCA project"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "scikit-learn>=1.4",
+  "matplotlib>=3.8",
+  "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

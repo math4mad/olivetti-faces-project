@@ -1,0 +1,19 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Olivetti Faces PCA Migration"
+  navbar:
+    left:
+      - href: notes/olivetti-pca.qmd
+        text: "Project note"
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+
+execute:
+  freeze: auto

@@ -1,0 +1,10 @@
+.DS_Store
+**/.DS_Store
+models/
+Stat2-julia/
+__pycache__/
+*.pyc
+.venv/
+
+/.quarto/
+**/*.quarto_ipynb
