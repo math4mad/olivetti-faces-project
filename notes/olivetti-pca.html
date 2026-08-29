@@ -153,6 +153,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data loading</a></li>
   <li><a href="#pca-fitting" id="toc-pca-fitting" class="nav-link" data-scroll-target="#pca-fitting">PCA fitting</a></li>
   <li><a href="#projection-and-reconstruction" id="toc-projection-and-reconstruction" class="nav-link" data-scroll-target="#projection-and-reconstruction">Projection and reconstruction</a></li>
+  <li><a href="#reconstruction-quality" id="toc-reconstruction-quality" class="nav-link" data-scroll-target="#reconstruction-quality">Reconstruction quality</a></li>
+  <li><a href="#model-accuracy-comparison" id="toc-model-accuracy-comparison" class="nav-link" data-scroll-target="#model-accuracy-comparison">Model accuracy comparison</a></li>
   <li><a href="#expected-behavior" id="toc-expected-behavior" class="nav-link" data-scroll-target="#expected-behavior">Expected behavior</a></li>
   <li><a href="#notes" id="toc-notes" class="nav-link" data-scroll-target="#notes">Notes</a></li>
   </ul>
@@ -187,22 +189,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-loading" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading">Data loading</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.data <span class="im">import</span> load_olivetti_faces</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>(X_train, X_test), (y_train, y_test) <span class="op">=</span> load_olivetti_faces(test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="load-data" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>root <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> candidate <span class="kw">in</span> [root, <span class="op">*</span>([root.parent] <span class="cf">if</span> root.name <span class="op">!=</span> <span class="st">"olivetti-faces-project"</span> <span class="cf">else</span> [])]:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (candidate <span class="op">/</span> <span class="st">"olivetti_faces"</span>).exists():</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        project_root <span class="op">=</span> candidate</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    project_root <span class="op">=</span> root</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>venv_site <span class="op">=</span> project_root <span class="op">/</span> <span class="st">".venv"</span> <span class="op">/</span> <span class="st">"lib"</span> <span class="op">/</span> <span class="ss">f"python</span><span class="sc">{</span>sys<span class="sc">.</span>version_info<span class="sc">.</span>major<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>sys<span class="sc">.</span>version_info<span class="sc">.</span>minor<span class="sc">}</span><span class="ss">"</span> <span class="op">/</span> <span class="st">"site-packages"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> venv_site.exists():</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(project_root))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(venv_site))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.data <span class="im">import</span> load_olivetti_faces</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>(X_train, X_test), (y_train, y_test) <span class="op">=</span> load_olivetti_faces(test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">123</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_train.shape)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(X_test.shape)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_train.shape)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(y_test.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(320, 4096)
+(80, 4096)
+(320,)
+(80,)</code></pre>
+</div>
+</div>
 </section>
 <section id="pca-fitting" class="level2">
 <h2 class="anchored" data-anchor-id="pca-fitting">PCA fitting</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> make_model</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> make_model(X_train, n_components<span class="op">=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fit-pca" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> make_model</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> make_model(X_train, n_components<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model[<span class="st">"pca"</span>].n_components)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>10</code></pre>
+</div>
+</div>
 </section>
 <section id="projection-and-reconstruction" class="level2">
 <h2 class="anchored" data-anchor-id="projection-and-reconstruction">Projection and reconstruction</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> transform_to_pcadata, reconstruct_data</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>projected <span class="op">=</span> transform_to_pcadata(model, X_train[:<span class="dv">5</span>])</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>reconstructed <span class="op">=</span> reconstruct_data(model, projected)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="project-reconstruct" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> olivetti_faces.model <span class="im">import</span> transform_to_pcadata, reconstruct_data</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>projected <span class="op">=</span> transform_to_pcadata(model, X_train[:<span class="dv">5</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>reconstructed <span class="op">=</span> reconstruct_data(model, projected)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(projected.shape)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reconstructed.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>(5, 10)
+(5, 4096)</code></pre>
+</div>
+</div>
+</section>
+<section id="reconstruction-quality" class="level2">
+<h2 class="anchored" data-anchor-id="reconstruction-quality">Reconstruction quality</h2>
+<p>The project includes a direct comparison between the original face and the reconstructed versions using different PCA component counts.</p>
+<p><img src="../imgs/reconstructed_face.png" class="img-fluid"></p>
+<p>This makes it clear that higher-dimensional PCA models recover more detail while lower-dimensional models produce a smoother approximation.</p>
+</section>
+<section id="model-accuracy-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="model-accuracy-comparison">Model accuracy comparison</h2>
+<p>We can compare reconstruction error as the number of retained components changes.</p>
+<p><img src="../imgs/model_accuracy_comparison.png" class="img-fluid"></p>
+<p>The expected pattern is that reconstruction error decreases as the model dimension increases, with a clear tradeoff between compact representation and accuracy.</p>
 </section>
 <section id="expected-behavior" class="level2">
 <h2 class="anchored" data-anchor-id="expected-behavior">Expected behavior</h2>
@@ -210,6 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The training matrix has shape <code>(320, 4096)</code> for the 80/20 split.</li>
 <li>PCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.</li>
 <li>Reconstructed faces should approximate the originals with small reconstruction error.</li>
+<li>More PCA components should reduce reconstruction error and preserve more facial detail.</li>
 </ul>
 </section>
 <section id="notes" class="level2">
