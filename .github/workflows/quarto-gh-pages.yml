@@ -2,7 +2,9 @@ name: Publish Quarto site to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [python]
+  pull_request:
+    branches: [python]
   workflow_dispatch:
 
 permissions:
