@@ -18,28 +18,42 @@
     "href": "notes/olivetti-pca.html#data-loading",
     "title": "Olivetti Faces PCA Migration",
     "section": "Data loading",
-    "text": "Data loading\nfrom olivetti_faces.data import load_olivetti_faces\n\n(X_train, X_test), (y_train, y_test) = load_olivetti_faces(test_size=0.2, random_state=123)"
+    "text": "Data loading\n\n\nCode\nimport sys\nfrom pathlib import Path\n\nroot = Path.cwd().resolve()\nfor candidate in [root, *([root.parent] if root.name != \"olivetti-faces-project\" else [])]:\n    if (candidate / \"olivetti_faces\").exists():\n        project_root = candidate\n        break\nelse:\n    project_root = root\n\nvenv_site = project_root / \".venv\" / \"lib\" / f\"python{sys.version_info.major}.{sys.version_info.minor}\" / \"site-packages\"\nif venv_site.exists():\n    sys.path.insert(0, str(project_root))\n    sys.path.insert(0, str(venv_site))\n\nfrom olivetti_faces.data import load_olivetti_faces\n\n(X_train, X_test), (y_train, y_test) = load_olivetti_faces(test_size=0.2, random_state=123)\nprint(X_train.shape)\nprint(X_test.shape)\nprint(y_train.shape)\nprint(y_test.shape)\n\n\n(320, 4096)\n(80, 4096)\n(320,)\n(80,)"
   },
   {
     "objectID": "notes/olivetti-pca.html#pca-fitting",
     "href": "notes/olivetti-pca.html#pca-fitting",
     "title": "Olivetti Faces PCA Migration",
     "section": "PCA fitting",
-    "text": "PCA fitting\nfrom olivetti_faces.model import make_model\n\nmodel = make_model(X_train, n_components=10)"
+    "text": "PCA fitting\n\n\nCode\nfrom olivetti_faces.model import make_model\n\nmodel = make_model(X_train, n_components=10)\nprint(model[\"pca\"].n_components)\n\n\n10"
   },
   {
     "objectID": "notes/olivetti-pca.html#projection-and-reconstruction",
     "href": "notes/olivetti-pca.html#projection-and-reconstruction",
     "title": "Olivetti Faces PCA Migration",
     "section": "Projection and reconstruction",
-    "text": "Projection and reconstruction\nfrom olivetti_faces.model import transform_to_pcadata, reconstruct_data\n\nprojected = transform_to_pcadata(model, X_train[:5])\nreconstructed = reconstruct_data(model, projected)"
+    "text": "Projection and reconstruction\n\n\nCode\nfrom olivetti_faces.model import transform_to_pcadata, reconstruct_data\n\nprojected = transform_to_pcadata(model, X_train[:5])\nreconstructed = reconstruct_data(model, projected)\nprint(projected.shape)\nprint(reconstructed.shape)\n\n\n(5, 10)\n(5, 4096)"
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#reconstruction-quality",
+    "href": "notes/olivetti-pca.html#reconstruction-quality",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Reconstruction quality",
+    "text": "Reconstruction quality\nThe project includes a direct comparison between the original face and the reconstructed versions using different PCA component counts.\n\nThis makes it clear that higher-dimensional PCA models recover more detail while lower-dimensional models produce a smoother approximation."
+  },
+  {
+    "objectID": "notes/olivetti-pca.html#model-accuracy-comparison",
+    "href": "notes/olivetti-pca.html#model-accuracy-comparison",
+    "title": "Olivetti Faces PCA Migration",
+    "section": "Model accuracy comparison",
+    "text": "Model accuracy comparison\nWe can compare reconstruction error as the number of retained components changes.\n\nThe expected pattern is that reconstruction error decreases as the model dimension increases, with a clear tradeoff between compact representation and accuracy."
   },
   {
     "objectID": "notes/olivetti-pca.html#expected-behavior",
     "href": "notes/olivetti-pca.html#expected-behavior",
     "title": "Olivetti Faces PCA Migration",
     "section": "Expected behavior",
-    "text": "Expected behavior\n\nThe training matrix has shape (320, 4096) for the 80/20 split.\nPCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.\nReconstructed faces should approximate the originals with small reconstruction error."
+    "text": "Expected behavior\n\nThe training matrix has shape (320, 4096) for the 80/20 split.\nPCA projection from 4096 features to 10 dimensions should keep the same reconstruction workflow.\nReconstructed faces should approximate the originals with small reconstruction error.\nMore PCA components should reduce reconstruction error and preserve more facial detail."
   },
   {
     "objectID": "notes/olivetti-pca.html#notes",
